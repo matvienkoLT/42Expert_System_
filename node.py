@@ -3,6 +3,8 @@ from enum import Enum
 class NodeType(Enum):
     RULE = 1
     SYMBOL = 2
+    IMPLIES = 3
+    BICONDITIONAL = 4
 
 class Node:
     def __init__(self, type, name, statement):
