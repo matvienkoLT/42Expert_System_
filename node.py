@@ -1,9 +1,8 @@
 from enum import Enum
 
 class NodeType(Enum):
-    RED = 1
-    GREEN = 2
-    BLUE = 3
+    RULE = 1
+    SYMBOL = 2
 
 class Node:
     def __init__(self, type, name, statement):
