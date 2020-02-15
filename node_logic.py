@@ -1,4 +1,5 @@
 import node
+import constant
 
 class NodeGraph:
     def __init__(self):
@@ -22,6 +23,15 @@ class NodeGraph:
         else:
             raise Exception("Have you seen that? Just now you have shotten your leg")
 
+    def __influence_scanner(self, value):
+        if isinstance(value, str):
+            for character in value:
+                if character in self.__vertices and character not in constant.CONSTANTS.OPERATORS:
+                    (self.__vertices[character][1]).append(self.__rules[value])
+                    #print(character, self.__vertices[character])
+        else:
+            raise Exception("Terminated point")
+
     def chain(self, parent, child, child_type):
         if isinstance(parent, str) and isinstance(child, str) and isinstance(child_type, node.NodeType):
             childObj = [child, child_type]
@@ -29,11 +39,17 @@ class NodeGraph:
         else:
             raise Exception("Hmmm, I suppose you're swift-developer")
 
-    def print(self):
+    def print_rules(self):
         for i in self.__rules:
             print(f'{i} =>')
             for x in self.__rules[i]:
                 print(f'        >>>{x}')
+
+    def print_vertices(self):
+        for i in self.__vertices:
+            print(f'{i} ->')
+            print(self.__vertices[i])
+
 
     def __pushToGraph(self, value, valueType):
         if valueType == node.NodeType.RULE:
@@ -41,19 +57,13 @@ class NodeGraph:
                 return False
             else:
                 self.__rules[value] = list()
+                self.__influence_scanner(value)
                 return True
         elif valueType == node.NodeType.SYMBOL:
-            self.__vertices[value] = node.Node(valueType, value, False)
+            if value not in self.__vertices:
+                self.__vertices[value] = [node.Node(valueType, value, False), list()]
             return True
         return False
 
-    # def __scanner(self, value):
-    #     if value.type == NodeType.BLUE:
-    #         self.__pushToGraph(value)
-    #     elif value.type == NodeType.RED:
-    #         ...
-    #     elif value.type == NodeType.GREEN:
-    #         ...
-    #     else:
-    #         raise Exception("Undefined type of Node")
+
 

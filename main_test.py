@@ -8,17 +8,32 @@ import node_logic
 
 graph = node_logic.NodeGraph()
 
-test1 = ['AB+C+', '=>', 'D']
-test2 = ['AB+C+G', '=>', 'C']
-test5 = ['AB+C+G', '=>', 'KC+']
-test3 = ['CD|', '=>', 'K']
-test4 = ['AB+', '=>', 'Y+Z']
+test1 = ['C', '=>', 'E']
+test2 = ['AB+C+', '=>', 'D']
+test5 = ['AB|', '=>', 'C']
+test3 = ['A!B+', '=>', 'F']
+test4 = ['C!G|', '=>', 'H']
+test5 = ['VW^', '=>', 'X']
+test6 = ['AB+', '=>', 'YZ+']
+test7 = ['CD|', '=>', 'XV|']
+test8 = ['EF+', '=>', '!V']
+test9 = ['AB+', '=>', 'C']
+#test10 = ['EF+', '=>', '!V']
+
+
+
 
 scanner.scanner(graph, test1)
 scanner.scanner(graph, test2)
 scanner.scanner(graph, test3)
 scanner.scanner(graph, test4)
 scanner.scanner(graph, test5)
+scanner.scanner(graph, test6)
+scanner.scanner(graph, test7)
+scanner.scanner(graph, test8)
+scanner.scanner(graph, test9)
+
+
 #scanner.scanner(graph, test5)
 
-graph.print()
+graph.print_vertices()
