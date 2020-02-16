@@ -39,4 +39,4 @@ graph.changeStatement('A', True)
 #scanner.scanner(graph, test5)
 
 graph.print_vertices()
-graph.print_rules()
+#graph.print_rules()

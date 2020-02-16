@@ -27,7 +27,7 @@ class NodeGraph:
         if isinstance(value, str):
             for character in value:
                 if character in self.__vertices and character not in constant.CONSTANTS.OPERATORS:
-                    (self.__vertices[character][1]).append(self.__rules[value])
+                    (self.__vertices[character][1]).append(value)
                     #print(character, self.__vertices[character])
         else:
             raise Exception("Terminated point")
@@ -69,6 +69,14 @@ class NodeGraph:
         if isinstance(value, str) and isinstance(state, bool):
             if value in self.__vertices:
                 self.__vertices[value][0].statement = state
+                calculus = self.PropositionalMath(value)
 
+    ###def __doMath(self, ):
 
-
+    class PropositionalMath:
+        def __init__(self, rule):
+            if isinstance(rule, str):
+                sz = len(rule)
+                print(sz)
+            else:
+                raise Exception("Have you seen that? Just now you have shotten your leg")
