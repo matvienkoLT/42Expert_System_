@@ -65,5 +65,10 @@ class NodeGraph:
             return True
         return False
 
+    def changeStatement(self, value, state):
+        if isinstance(value, str) and isinstance(state, bool):
+            if value in self.__vertices:
+                self.__vertices[value][0].statement = state
+
 
 

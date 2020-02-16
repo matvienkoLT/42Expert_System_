@@ -25,6 +25,10 @@ class Node:
     def statement(self):
         return self.__statement
 
+    @statement.setter
+    def statement(self, state):
+        self.__statement = state
+
     @property
     def child(self):
         return self.__child

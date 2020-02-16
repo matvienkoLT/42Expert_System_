@@ -33,7 +33,10 @@ scanner.scanner(graph, test7)
 scanner.scanner(graph, test8)
 scanner.scanner(graph, test9)
 
+graph.changeStatement('A', True)
+
 
 #scanner.scanner(graph, test5)
 
 graph.print_vertices()
+graph.print_rules()
