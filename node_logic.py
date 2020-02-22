@@ -115,10 +115,14 @@ class NodeGraph:
         def __calculusHelper(self, character):
             if character == constant.CONSTANTS.OPERATOR_NOT:
                 return operator.not_
+            elif character == constant.CONSTANTS.OPERATOR_AND:
+                return operator.and_
+            elif character == constant.CONSTANTS.OPERATOR_OR:
+                return operator.or_
+            elif character == constant.CONSTANTS.OPERATOR_XOR:
+                return  operator.xor
             else:
-                return None
-
-
+                return  operator.length_hint
 
         def __doCalculus(self):
             for character in self.__rule:
