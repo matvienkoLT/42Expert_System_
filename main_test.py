@@ -6,7 +6,7 @@ import node_logic
 # c = node.Node(node.NodeType.BLUE, "B", "STATEMENT")
 # p = node.Node(node.NodeType.BLUE, "D", "STATEMENT")
 
-graph = node_logic.NodeGraph()
+graph = node_logic.NodeGraph(False)
 
 test1 = ['C', '=>', 'E']
 test2 = ['AB+C+', '=>', 'D']
@@ -33,10 +33,11 @@ scanner.scanner(graph, test7)
 scanner.scanner(graph, test8)
 scanner.scanner(graph, test9)
 
-graph.changeStatement('A', True)
+#graph.changeStatement('C', True)
+graph.solveRule('!C')
 
 
 #scanner.scanner(graph, test5)
 
 graph.print_vertices()
-#graph.print_rules()
+graph.print_rules()

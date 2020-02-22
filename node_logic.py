@@ -1,10 +1,15 @@
 import node
 import constant
+import logging
+import operator
+from datetime import datetime
 
 class NodeGraph:
-    def __init__(self):
+    def __init__(self, loggingMode):
         self.__vertices = dict()
         self.__rules = dict()
+        if loggingMode:
+            logging.basicConfig(filename=f'Logic_{str(datetime.now())}.log', level=logging.INFO)
 
     def __chainChildToParent(self, parent, child):
         x = self.__rules[parent]
@@ -69,14 +74,57 @@ class NodeGraph:
         if isinstance(value, str) and isinstance(state, bool):
             if value in self.__vertices:
                 self.__vertices[value][0].statement = state
-                calculus = self.PropositionalMath(value)
+                calculus = self.__PropositionalMath(value, self.__vertices).statement
+                print(calculus)
 
-    ###def __doMath(self, ):
+    def solveRule(self, rule):
+        calculus = self.__PropositionalMath(rule, self.__vertices).statement
+        print(calculus)
 
-    class PropositionalMath:
-        def __init__(self, rule):
+    class __PropositionalMath:
+        def __init__(self, rule, __vertices):
+            self.__vertices = __vertices
+            self.__rule = rule
+            self.__statement = 'Undefined'
             if isinstance(rule, str):
-                sz = len(rule)
-                print(sz)
+                rule_size = len(rule)
+                if rule_size <= 0: raise Exception("Rule isn't valid")  ### checking if string is empty
+                elif rule_size == 1: ### checking if string have just one symbol.
+                    object = self.__seekVertix(rule)
+                    if object:
+                        self.__statement = object.statement
+                        print(self.__statement)
+                else:
+                    self.__doCalculus()
             else:
                 raise Exception("Have you seen that? Just now you have shotten your leg")
+
+        @property
+        def statement(self):
+            return self.__statement
+
+        def __seekVertix(self, symbol):
+            if symbol in self.__vertices:
+                logging.info(f'Changed statement of object::{self.__vertices[symbol][0]} '\
+                                                            f'{self.__vertices[symbol][0].name}::'\
+                                                            f'{self.__vertices[symbol][0].statement}')
+                return self.__vertices[symbol][0]
+            else:
+                return None
+
+        def __calculusHelper(self, character):
+            if character == constant.CONSTANTS.OPERATOR_NOT:
+                return operator.not_
+            else:
+                return None
+
+
+
+        def __doCalculus(self):
+            for character in self.__rule:
+                operator = self.__calculusHelper(character)
+                if operator:
+                    print(operator(True))
+
+
+
