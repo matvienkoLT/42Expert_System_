@@ -122,13 +122,34 @@ class NodeGraph:
             elif character == constant.CONSTANTS.OPERATOR_XOR:
                 return  operator.xor
             else:
-                return  operator.length_hint
+                return  constant.CONSTANTS.OPERATOR_SYMBOL
 
         def __doCalculus(self):
+
+            ## Note: The first boolean is intialization status:
+            # #False = Uninitialized
+            ## Second Boolean is Statement of object
+            _operand0 = [False, False]
+            _operand1 = [False, False]
+            _operator = [False, None]
+
             for character in self.__rule:
-                operator = self.__calculusHelper(character)
-                if operator:
-                    print(operator(True))
-
-
-
+                tempOperator = self.__calculusHelper(character)
+                if tempOperator == constant.CONSTANTS.OPERATOR_SYMBOL:
+                    if _operand0[0] == False:
+                        _operand0[0] = True
+                        _operand0[1] = self.__vertices[character][0].statement
+                        if _operator[0] and _operator[1] == operator.not_:
+                            _operand0[1] = _operator[1](_operand0[1])
+                            _operator[0] = False
+                    else:
+                        _operand1[0] = True
+                        _operand1[1] = self.__vertices[character][0].statement
+                        if _operator[0] and _operator[1] == operator.not_:
+                            _operand1[1] = _operator[1](_operand1[1])
+                            _operator[0] = False
+                elif tempOperator == operator.not_:
+                    _operator[0] = True
+                    _operator[1] = tempOperator
+                else:
+                    print('HERE')
