@@ -75,7 +75,6 @@ class NodeGraph:
             if value in self.__vertices:
                 self.__vertices[value][0].statement = state
                 calculus = self.__PropositionalMath(value, self.__vertices).statement
-                print(calculus)
 
     def solveRule(self, rule):
         calculus = self.__PropositionalMath(rule, self.__vertices).statement
@@ -125,31 +124,53 @@ class NodeGraph:
                 return  constant.CONSTANTS.OPERATOR_SYMBOL
 
         def __doCalculus(self):
+            operand0 = None
+            operand1 = None
+            resultState = None
+
+            for character in self.__rule:
+                noDistributed = self.__calculusHelper(character)
+
+                if noDistributed ==  constant.CONSTANTS.OPERATOR_SYMBOL:
+                    if operand0 == None: operand0 = self.__vertices[character][0].statement
+                    elif operand1 == None: operand1 =self.__vertices[character][0].statement
+                    else: raise Exception('Involked undefined operand behavior')
+                else:
+                    curr_operator = noDistributed
+
+                    if curr_operator == operator.not_:
+                        resultState = curr_operator(operand0)
+                    else:
+                        resultState = curr_operator(operand0, operand1)
+                    operand0 =resultState
+                    operand1 = None
+            print(resultState)
+            ##print(resultState)
 
             ## Note: The first boolean is intialization status:
             # #False = Uninitialized
             ## Second Boolean is Statement of object
-            _operand0 = [False, False]
-            _operand1 = [False, False]
-            _operator = [False, None]
+            # _operand0 = [False, False]
+            # _operand1 = [False, False]
+            # _operator = [False, None]
 
-            for character in self.__rule:
-                tempOperator = self.__calculusHelper(character)
-                if tempOperator == constant.CONSTANTS.OPERATOR_SYMBOL:
-                    if _operand0[0] == False:
-                        _operand0[0] = True
-                        _operand0[1] = self.__vertices[character][0].statement
-                        if _operator[0] and _operator[1] == operator.not_:
-                            _operand0[1] = _operator[1](_operand0[1])
-                            _operator[0] = False
-                    else:
-                        _operand1[0] = True
-                        _operand1[1] = self.__vertices[character][0].statement
-                        if _operator[0] and _operator[1] == operator.not_:
-                            _operand1[1] = _operator[1](_operand1[1])
-                            _operator[0] = False
-                elif tempOperator == operator.not_:
-                    _operator[0] = True
-                    _operator[1] = tempOperator
-                else:
-                    print('HERE')
+            # for character in self.__rule:
+            #     tempOperator = self.__calculusHelper(character)
+            #     if tempOperator == constant.CONSTANTS.OPERATOR_SYMBOL:
+            #         if _operand0[0] == False:
+            #             _operand0[0] = True
+            #             _operand0[1] = self.__vertices[character][0].statement
+            #             if _operator[0] and _operator[1] == operator.not_:
+            #                 _operand0[1] = _operator[1](_operand0[1])
+            #                 _operator[0] = False
+            #         else:
+            #             _operand1[0] = True
+            #             _operand1[1] = self.__vertices[character][0].statement
+            #             if _operator[0] and _operator[1] == operator.not_:
+            #                 _operand1[1] = _operator[1](_operand1[1])
+            #                 _operator[0] = False
+            #     elif tempOperator == operator.not_:
+            #         _operator[0] = True
+            #         _operator[1] = tempOperator
+            #     else:
+            #         print('HERE')

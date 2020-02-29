@@ -33,8 +33,8 @@ scanner.scanner(graph, test7)
 scanner.scanner(graph, test8)
 scanner.scanner(graph, test9)
 
-#graph.changeStatement('C', True)
-graph.solveRule('!C')
+graph.changeStatement('C', True)
+graph.solveRule('CB+')
 
 
 #scanner.scanner(graph, test5)
